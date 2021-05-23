@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_171057) do
+ActiveRecord::Schema.define(version: 2021_05_23_192611) do
 
   create_table "deputies", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_171057) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "federal_unity"
+    t.string "cpf"
   end
 
 end
