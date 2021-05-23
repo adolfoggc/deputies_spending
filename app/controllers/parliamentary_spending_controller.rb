@@ -21,6 +21,7 @@ class ParliamentarySpendingController < ApplicationController
 				row = row.split(";")
 				while i < row.length do
 					row[i] = row[i].gsub!(/[^0-9A-Za-zÁáÂâÃãÀàÉéÍíÓóÔôÚú]/, '')
+
 					if rows == 0
 						column_titles << row[i]
 					end
@@ -29,9 +30,10 @@ class ParliamentarySpendingController < ApplicationController
 
 				if( row[column_titles.index("sgUF")]  == "CE")
 					unless cearenses.include?(row[column_titles.index("ideCadastro")])
+						
 						cearenses << row[column_titles.index("ideCadastro")]
-						Deputy.create(
-							name: to_name(row[column_titles.index("txNomeParlamentar")]), 
+						Deputy.create!(
+							name: row[column_titles.index("txNomeParlamentar")], 
 							deputy_id: row[column_titles.index("ideCadastro")], 
 							party: row[column_titles.index("sgPartido")],
 							federal_unity: row[column_titles.index("sgUF")].downcase,
@@ -44,5 +46,7 @@ class ParliamentarySpendingController < ApplicationController
 			end
 			rows += 1
 		end
+
+		byebug
 	end
 end
