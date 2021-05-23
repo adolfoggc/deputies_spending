@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ParliamentarySpendingControllerTest < ActionDispatch::IntegrationTest
   test "should get upload" do
-    get parliamentary_spending_upload_url
+    get root_path
     assert_response :success
   end
 
