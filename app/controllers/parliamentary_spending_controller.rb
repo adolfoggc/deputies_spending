@@ -46,7 +46,5 @@ class ParliamentarySpendingController < ApplicationController
 			end
 			rows += 1
 		end
-
-		byebug
 	end
 end
