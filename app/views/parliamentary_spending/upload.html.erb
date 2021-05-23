@@ -1,0 +1,9 @@
+<h1>ParliamentarySpending#upload</h1>
+
+<%= form_with(url: import_path, multipart: true) do %>
+  <fieldset>
+    <legend>Arquivo de gastos parlamentares</legend>
+    <%= file_field_tag :cvs_file %>
+    <%= submit_tag( "Import" ) %>
+  </fieldset>
+<% end %>

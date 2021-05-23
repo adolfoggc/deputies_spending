@@ -1,0 +1,2 @@
+module ParliamentarySpendingHelper
+end
