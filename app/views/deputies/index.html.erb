@@ -24,7 +24,7 @@
 			<% @deputies.each do |deputy| %>
 				<tr>
 					<td>
-						<%= deputy.name %>
+						<%= link_to deputy.name, deputies_show_path(deputy) %>
 					</td>
 					<td>
 						<%= deputy.deputy_id %>
