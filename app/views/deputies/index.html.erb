@@ -1,2 +1,47 @@
 <h1>Deputies#index</h1>
 <p>Find me in app/views/deputies/index.html.erb</p>
+
+<% if @deputies.any? %>
+	<table>
+		<thead>
+			<th>
+				Nome
+			</th>
+			<th>
+				Identificador
+			</th>
+			<th>
+				CPF
+			</th>
+			<th>
+				Partido
+			</th>
+			<th>
+				Estado
+			</th>
+		</thead>
+		<tbody>
+			<% @deputies.each do |deputy| %>
+				<tr>
+					<td>
+						<%= deputy.name %>
+					</td>
+					<td>
+						<%= deputy.deputy_id %>
+					</td>
+					<td>
+						<%= deputy.cpf_format %>
+					</td>
+					<td>
+						<%= deputy.party %>
+					</td>
+					<td>
+						<%= deputy.federal_unity.upcase %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% else %>
+	NENHUM DEPUTADO NA BASE DE DADOS
+<% end %>
