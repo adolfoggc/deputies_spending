@@ -13,7 +13,7 @@ class Invoice < ApplicationRecord
 			return "Documento Fiscal"
 		elsif self.receipt?
 			return "Recibo"
-		elsif self.foreign_expenses
+		elsif self.foreign_expenses?
 			return "Despesa no Exterior"
 		else
 			return "Despesa não Definida"
