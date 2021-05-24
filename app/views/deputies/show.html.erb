@@ -18,4 +18,51 @@
   <p>Total: <%= @invoices[:normal] + @invoices[:compensations] %></p>
   <p>Valor da maior despesa: <%= @deputy.most_expensive_invoice %></p>
   <p>Média mensal (Inclui compensações): <%= @invoices[:mean_by_month] %></p>
+
+  <table>
+		<thead>
+			<th>
+				Descrição
+			</th>
+			<th>
+				Descrição Completa
+			</th>
+			<th>
+				Fornecedor
+			</th>
+      <th>
+				Tipo do Documento
+			</th>
+      <th>
+				Data de Emissão
+			</th>
+      <th>
+				Valor Líquido
+			</th>
+		</thead>
+		<tbody>
+			<% @deputy.invoices.order(:issue_date).each do |invoice| %>
+				<tr>
+					<td>
+						<%= invoice.description %>
+					</td>
+					<td>
+						<%= invoice.specific_description %>
+					</td>
+					<td>
+						<%= invoice.seller %>
+					</td>
+					<td>
+						<%= invoice.translate_kind %>
+					</td>
+					<td>
+						<%= invoice.issue_date.nil? ? invoice.issue_date : invoice.issue_date.strftime("%d/%m/%Y") %>
+					</td>
+          <td>
+						<%= invoice.value %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 <% end %>
