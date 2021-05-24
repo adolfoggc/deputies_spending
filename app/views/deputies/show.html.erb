@@ -1,2 +1,21 @@
-<h1>Deputies#show</h1>
-<p>Find me in app/views/deputies/show.html.erb</p>
+
+<% if @deputy.nil? %>
+  NENHUM POLÍTICO COM ESSA IDENTIFICAÇÃO
+<% else %>
+  <h2><%= @deputy.name %></h2>
+  <br>
+	<%= @deputy.deputy_id %>
+  <br>
+	<%= @deputy.cpf_format %>
+  <br>
+	<%= @deputy.party %>
+  <br>
+	<%= @deputy.federal_unity.upcase %>
+  <hr>
+  <h2>Despesas</h2>
+  <p>Não compensadas: <%= @invoices[:normal] %></p>
+  <p>Compensações: <%= @invoices[:compensations] %></p>
+  <p>Total: <%= @invoices[:normal] + @invoices[:compensations] %></p>
+  <p>Valor da maior despesa: <%= @deputy.most_expensive_invoice %></p>
+  <p>Média mensal (Inclui compensações): <%= @invoices[:mean_by_month] %></p>
+<% end %>
