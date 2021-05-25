@@ -40,6 +40,9 @@
       <th>
 				Valor Líquido
 			</th>
+			<th>
+				Link da Nota
+			</th>
 		</thead>
 		<tbody>
 			<% @deputy.invoices.order(:issue_date).each do |invoice| %>
@@ -61,6 +64,9 @@
 					</td>
           <td>
 						<%= invoice.value %>
+					</td>
+					<td>
+						<%= invoice.url.blank? ? "Inexistente" : (link_to "Nota", invoice.url, target: "_blank") %>
 					</td>
 				</tr>
 			<% end %>
