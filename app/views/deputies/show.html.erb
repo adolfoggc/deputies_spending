@@ -31,6 +31,164 @@
 		</div>
 	</div>  
   <br>
+
+	<div class="row">
+		<div class="col-6">
+			<canvas id="spent_by_month" width="400" height="400"></canvas>
+		</div>
+		<div class="col-6">
+			<canvas id="spent_by_month_pie" width="400" height="400"></canvas>
+		</div>
+	</div>
+	<script>
+		var ctx = document.getElementById('spent_by_month');
+		var expenses_by_month = (<%= @invoices[:months] %>);
+		expenses_by_month.push( <%= @invoices[:without_date] %> );
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+					labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Sem Data'],
+					datasets: [{
+						label: 'Valor gasto',
+						afterLabel: 'R$',
+						data: expenses_by_month,
+						backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+								
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+
+								'rgba(255, 99, 132, 0.2)'
+						],
+						borderColor: [
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)'
+						],
+						borderWidth: 1
+					}
+				]
+			},
+			options: {
+				scales: {
+					y: {
+							beginAtZero: true
+					}
+				},
+				plugins: {
+					tooltip: {
+							callbacks: {
+									label: function(context) {
+											var label = context.dataset.label || '';
+
+											if (label) {
+													label += ': ';
+											}
+											if (context.parsed.y !== null) {
+													label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+											}
+											return label;
+									}
+							}
+					}
+				}
+			}
+		});
+
+
+		var pie_graph = document.getElementById('spent_by_month_pie');
+		var pieChart = new Chart(pie_graph, {
+			type: 'bar',
+			data: {
+					labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Sem Data'],
+					datasets: [{
+						label: 'Valor gasto',
+						afterLabel: 'R$',
+						type: 'doughnut',
+						data: expenses_by_month,
+						backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+								
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+
+								'rgba(255, 99, 132, 0.2)'
+						],
+						borderColor: [
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)'
+						],
+						borderWidth: 1,
+						hoverOffset: 20
+					}
+				]
+			},
+			options: {
+				plugins: {
+					tooltip: {
+						callbacks: {
+							label: function(context) {
+								var label = context.dataset.label || '';
+
+								if (label) {
+									label += ': ';
+								}
+								if (context.parsed.y !== null) {
+									label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+								}
+								return label;
+							}
+						}
+					}
+				}
+			}
+		});
+	</script>
+
+
 	<h2>Despesas</h2>
 	<% if @deputy.invoices.blank? %>
 		NENHUMA DESPESA CADASTRADA
