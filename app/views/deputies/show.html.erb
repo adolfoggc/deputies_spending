@@ -12,14 +12,17 @@
 	<%= @deputy.party %>
   <br>
 	<%= @deputy.federal_unity.upcase %>
+	<br>
   <hr>
   <h2>Despesas</h2>
-  <p>Não compensadas: <%= @invoices[:normal] %></p>
-  <p>Compensações: <%= @invoices[:compensations] %></p>
-  <p>Total: <%= @invoices[:normal] + @invoices[:compensations] %></p>
-  <p>Valor da maior despesa: <%= @deputy.most_expensive_invoice %></p>
-  <p>Média mensal (Inclui compensações): <%= @invoices[:mean_by_month] %></p>
-
+  <p>Não compensadas: <%= to_real @invoices[:normal] %></p>
+  <p>Compensações: <%= to_real @invoices[:compensations] %></p>
+  <p>Total: <%= to_real @invoices[:normal] + @invoices[:compensations] %></p>
+  <p>Valor da maior despesa: <%= to_real @deputy.most_expensive_invoice %></p>
+  <p>Média mensal (Inclui compensações): <%= to_real @invoices[:mean_by_month] %></p>
+	<p>Quantidade total de gastos: <%= @invoices[:invoices_quantity] %></p>
+	<p>Gastos sem nota fiscal: <%= @invoices[:without_url] %></p>
+	<p>Total gasto sem nota fiscal: <%= to_real @invoices[:expenses_without_url] %></p>
   <table>
 		<thead>
 			<th>
@@ -63,7 +66,7 @@
 						<%= invoice.issue_date.nil? ? invoice.issue_date : invoice.issue_date.strftime("%d/%m/%Y") %>
 					</td>
           <td>
-						<%= invoice.value %>
+						<%= to_real invoice.value %>
 					</td>
 					<td>
 						<%= invoice.url.blank? ? "Inexistente" : (link_to "Nota", invoice.url, target: "_blank") %>

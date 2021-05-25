@@ -21,7 +21,7 @@
 						<%= link_to deputy[:name], deputies_show_path(deputy[:id]) %>
 					</td>
 					<td>
-						<%= deputy[:total_spent] %>
+						<%= to_real deputy[:total_spent] %>
 					</td>
 					<td>
 						<%= @position %>
