@@ -124,7 +124,6 @@
 					labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Sem Data'],
 					datasets: [{
 						label: 'Valor gasto',
-						afterLabel: 'R$',
 						type: 'doughnut',
 						data: expenses_by_month,
 						backgroundColor: [
@@ -177,7 +176,7 @@
 									label += ': ';
 								}
 								if (context.parsed.y !== null) {
-									label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+									label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed);
 								}
 								return label;
 							}
