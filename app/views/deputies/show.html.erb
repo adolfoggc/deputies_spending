@@ -3,6 +3,7 @@
   NENHUM POLÍTICO COM ESSA IDENTIFICAÇÃO
 <% else %>
   <h2><%= @deputy.name %></h2>
+  <%= image_tag("https://www.camara.leg.br/internet/deputado/bandep/#{@deputy.deputy_id}.jpg", alt: "Sem Foto") %>
   <br>
 	<%= @deputy.deputy_id %>
   <br>

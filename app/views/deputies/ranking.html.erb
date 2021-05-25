@@ -1,0 +1,36 @@
+<h1>Deputies#index</h1>
+<p>Find me in app/views/deputies/index.html.erb</p>
+
+<% if @deputies_array.any? %>
+	<table>
+		<thead>
+			<th>
+				Nome
+			</th>
+			<th>
+				Gasto Total
+			</th>
+			<th>
+				Posição
+			</th>
+		</thead>
+		<tbody>
+			<% @deputies_array.each do |deputy| %>
+				<tr>
+					<td>
+						<%= link_to deputy[:name], deputies_show_path(deputy[:id]) %>
+					</td>
+					<td>
+						<%= deputy[:total_spent] %>
+					</td>
+					<td>
+						<%= @position %>
+            <% @position +=1 %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% else %>
+	NENHUM DEPUTADO NA BASE DE DADOS
+<% end %>
