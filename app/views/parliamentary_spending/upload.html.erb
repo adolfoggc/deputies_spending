@@ -1,9 +1,12 @@
-<h1>ParliamentarySpending#upload</h1>
+<h1>Área de Upload</h1>
+<p>Insira aqui seu arquivo de gastos parlamentares no formato .csv para alimentar o banco de dados.</p>
+<p>Não tem nenhum arquivo? Sem problemas! Você pode baixar <%= link_to 'aqui', 'https://dadosabertos.camara.leg.br/swagger/api.html#staticfile', target: "_blank" %> e fazer upload no botão abaixo</p>
 
+<p><strong>ATENÇÃO: </strong>Inserir um arquivo implica em apagar todos dados anteriores e a inserção dos novos dados. O processo pode ser demorado, mas também é um ótimo momento para pegar um cafézinho. Coincidência ou providência?</p>
 <%= form_with(url: import_path, multipart: true) do %>
   <fieldset>
     <legend>Arquivo de gastos parlamentares</legend>
     <%= file_field_tag :cvs_file %>
-    <%= submit_tag( "Import" ) %>
+    <%= submit_tag( "Importar" ) %>
   </fieldset>
 <% end %>
