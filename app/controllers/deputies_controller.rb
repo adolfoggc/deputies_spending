@@ -5,7 +5,7 @@ class DeputiesController < ApplicationController
 
 	def show
 		@deputy = Deputy.find_by(id: params[:id])
-		@invoices = @deputy.total_in_invoices
+		@invoices = @deputy.invoices_info
 	end
 
 	def ranking
@@ -13,7 +13,7 @@ class DeputiesController < ApplicationController
 		@position = 1
 		count = 0
 		Deputy.all.each do |deputy|
-			invoices = deputy.total_in_invoices
+			invoices = deputy.invoices_info
 			deputy_data = {name: deputy.name, total_spent: invoices[:normal] + invoices[:compensations], id: deputy.id}
 			# ordering array
 			ordered = false
