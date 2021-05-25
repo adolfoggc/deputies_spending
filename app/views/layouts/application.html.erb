@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>DesafioBackend</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+	<head>
+		<title>Gastos Parlamentares</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-  </head>
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+	</head>
 
-  <body>
-    <%= yield %>
-  </body>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<%= link_to 'Gastos Parlamentares', root_path, class: "navbar-brand"%>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<%= nav_link('Início', root_path, 'parliamentary_spending', '') %>
+						</li>
+						<li class="nav-item">
+							<%= nav_link('Parlamentares', deputies_index_path, '', 'index') %>
+						</li>
+						<li class="nav-item">
+							<%= nav_link('Ranking', deputies_ranking_path, '', 'ranking') %>
+						</li>
+					</ul>
+				</div>
+			</div>
+</nav>
+		<%= yield %>
+	</body>
 </html>
