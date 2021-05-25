@@ -1,6 +1,15 @@
 <h1>Ranking de Gastos</h1>
 
 <% if @deputies_array.any? %>
+	<div class="row">
+		<div class="col-6">
+			<canvas id="spent_by_month" width="200" height="200"></canvas>
+		</div>
+		<div class="col-6">
+			<canvas id="spent_by_month_pie" width="400" height="400"></canvas>
+		</div>
+	</div>
+
 	<table class="table table-dark table-striped table-hover">
 		<thead>
 			<th>
@@ -28,8 +37,162 @@
 					</td>
 				</tr>
 			<% end %>
+			<tr>
+				<td>
+					Total
+				</td>
+				<td colspan="2">
+					<%= to_real @total %>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 <% else %>
 	NENHUM DEPUTADO NA BASE DE DADOS
 <% end %>
+
+<script>
+		names = <%= @names.to_json.html_safe %>;
+
+		var ctx = document.getElementById('spent_by_month');
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+					labels: names,
+					datasets: [{
+						label: 'Valor gasto',
+						afterLabel: 'R$',
+						data:  <%= @expenses %>,
+						backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+								
+								'rgba(255, 99, 132, 0.8)',
+								'rgba(54, 162, 235, 0.8)',
+								'rgba(255, 206, 86, 0.8)',
+								'rgba(75, 192, 192, 0.8)',
+								'rgba(153, 102, 255, 0.8)',
+								'rgba(255, 159, 64, 0.8)',
+
+								'rgba(0, 0, 0, 0.2)'
+						],
+						borderColor: [
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(0, 0, 0, 0.5)'
+						],
+						borderWidth: 1
+					}
+				]
+			},
+			options: {
+				scales: {
+					y: {
+							beginAtZero: true
+					}
+				},
+				plugins: {
+					tooltip: {
+							callbacks: {
+									label: function(context) {
+											var label = context.dataset.label || '';
+
+											if (label) {
+													label += ': ';
+											}
+											if (context.parsed.y !== null) {
+													label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+											}
+											return label;
+									}
+							}
+					}
+				}
+			}
+		});
+
+
+		var pie_graph = document.getElementById('spent_by_month_pie');
+		var pieChart = new Chart(pie_graph, {
+			type: 'doughnut',
+			data: {
+					labels: names,
+					datasets: [{
+						label: 'Valor gasto',
+						data: <%= @expenses %>,
+						backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)',
+								'rgba(255, 159, 64, 0.2)',
+								
+								'rgba(255, 99, 132, 0.8)',
+								'rgba(54, 162, 235, 0.8)',
+								'rgba(255, 206, 86, 0.8)',
+								'rgba(75, 192, 192, 0.8)',
+								'rgba(153, 102, 255, 0.8)',
+								'rgba(255, 159, 64, 0.8)',
+
+								'rgba(0, 0, 0, 0.2)'
+						],
+						borderColor: [
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)',
+
+								'rgba(0, 0, 0, 0.5)'
+						],
+						borderWidth: 1,
+						hoverOffset: 20
+					}
+				]
+			},
+			options: {
+				plugins: {
+					tooltip: {
+						callbacks: {
+							label: function(context) {
+								var label = context.dataset.label || '';
+
+								if (label) {
+									label += ': ';
+								}
+								if (context.parsed.y !== null) {
+									label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed);
+								}
+								return label;
+							}
+						}
+					}
+				}
+			}
+		});
+	</script>

@@ -12,6 +12,7 @@ class DeputiesController < ApplicationController
 		@deputies_array = []
 		@position = 1
 		count = 0
+		@total = 0
 		Deputy.all.each do |deputy|
 			invoices = deputy.invoices_info
 			deputy_data = {name: deputy.name, total_spent: invoices[:normal] + invoices[:compensations], id: deputy.id}
@@ -28,6 +29,12 @@ class DeputiesController < ApplicationController
 				i -= 1
 			end
 		end
-		
+		@names = []
+		@expenses = []
+		@deputies_array.each do |deputy_data|
+			@names << deputy_data[:name].to_json.html_safe
+			@expenses << deputy_data[:total_spent]
+			@total += deputy_data[:total_spent]
+		end
 	end
 end
