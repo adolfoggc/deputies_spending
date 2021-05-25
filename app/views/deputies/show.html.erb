@@ -60,14 +60,14 @@
 								'rgba(153, 102, 255, 0.2)',
 								'rgba(255, 159, 64, 0.2)',
 								
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(255, 159, 64, 0.2)',
+								'rgba(255, 99, 132, 0.8)',
+								'rgba(54, 162, 235, 0.8)',
+								'rgba(255, 206, 86, 0.8)',
+								'rgba(75, 192, 192, 0.8)',
+								'rgba(153, 102, 255, 0.8)',
+								'rgba(255, 159, 64, 0.8)',
 
-								'rgba(255, 99, 132, 0.2)'
+								'rgba(0, 0, 0, 0.2)'
 						],
 						borderColor: [
 								'rgba(255, 99, 132, 1)',
@@ -84,7 +84,7 @@
 								'rgba(153, 102, 255, 1)',
 								'rgba(255, 159, 64, 1)',
 
-								'rgba(255, 99, 132, 1)'
+								'rgba(0, 0, 0, 0.5)'
 						],
 						borderWidth: 1
 					}
@@ -119,12 +119,11 @@
 
 		var pie_graph = document.getElementById('spent_by_month_pie');
 		var pieChart = new Chart(pie_graph, {
-			type: 'bar',
+			type: 'doughnut',
 			data: {
 					labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Sem Data'],
 					datasets: [{
 						label: 'Valor gasto',
-						type: 'doughnut',
 						data: expenses_by_month,
 						backgroundColor: [
 								'rgba(255, 99, 132, 0.2)',
@@ -134,14 +133,14 @@
 								'rgba(153, 102, 255, 0.2)',
 								'rgba(255, 159, 64, 0.2)',
 								
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(255, 159, 64, 0.2)',
+								'rgba(255, 99, 132, 0.8)',
+								'rgba(54, 162, 235, 0.8)',
+								'rgba(255, 206, 86, 0.8)',
+								'rgba(75, 192, 192, 0.8)',
+								'rgba(153, 102, 255, 0.8)',
+								'rgba(255, 159, 64, 0.8)',
 
-								'rgba(255, 99, 132, 0.2)'
+								'rgba(0, 0, 0, 0.2)'
 						],
 						borderColor: [
 								'rgba(255, 99, 132, 1)',
@@ -158,7 +157,7 @@
 								'rgba(153, 102, 255, 1)',
 								'rgba(255, 159, 64, 1)',
 
-								'rgba(255, 99, 132, 1)'
+								'rgba(0, 0, 0, 0.5)'
 						],
 						borderWidth: 1,
 						hoverOffset: 20
