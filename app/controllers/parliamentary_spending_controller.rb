@@ -57,7 +57,8 @@ class ParliamentarySpendingController < ApplicationController
 						number: row[column_titles.index("txtNumero")],
 						document_kind: row[column_titles.index("indTipoDocumento")].to_i,
 						issue_date: row[column_titles.index("datEmissao")],
-						value: row[column_titles.index("vlrLiquido")]
+						value: row[column_titles.index("vlrLiquido")],
+						url: row[column_titles.index("urlDocumento")]
 					)
 
 					invoice.save!
