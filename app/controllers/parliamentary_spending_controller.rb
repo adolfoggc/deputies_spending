@@ -8,32 +8,26 @@ class ParliamentarySpendingController < ApplicationController
 		i = 0
 		rows = 0
 		column_titles = []
+
 		cearenses = Hash.new
-
-		if Invoice.all.count > 0
-			Invoice.all.each do |invoice|
-				invoice.destroy
-			end
-		end
-
-		if Deputy.all.count > 0
-			Deputy.all.each do |deputy|
-				deputy.destroy
-			end
-		end
+		Invoice.delete_all
+		Deputy.delete_all
 
 		File.open(myfile).each_line do |row|
 				i = 0
 				row = row.split(";")
 				while i < row.length do
-					row[i] = row[i].gsub!(/[^0-9A-Za-zÁáÂâÃãÀàÉéÍíÓóÔôÚúÇç ]/, '')
-
+					if i == column_titles.index("urlDocumento")
+						row[i] = clean_string( row[i] )
+					else
+						row[i] = row[i].gsub!(/[^0-9A-Za-zÁáÂâÃãÀàÉéÍíÓóÔôÚúÇç. ]/, '')
+					end
 					if rows == 0
 						column_titles << row[i]
 					end
 					i += 1
 				end
-
+				
 				if( row[column_titles.index("sgUF")]  == "CE")
 					unless cearenses.has_key?( row[column_titles.index("ideCadastro")] )
 						new_deputy = Deputy.new(
@@ -47,7 +41,9 @@ class ParliamentarySpendingController < ApplicationController
 						
 						cearenses[ row[column_titles.index("ideCadastro")] ] = new_deputy.id
 					end
-
+					if !([0, 1, 2, 3].include?(row[column_titles.index("indTipoDocumento")].to_i))
+						row[column_titles.index("indTipoDocumento")] = 3
+					end
 					invoice = Invoice.new(
 						deputy_id: cearenses[ row[column_titles.index("ideCadastro")] ],
 						description: row[column_titles.index("txtDescricao")],
@@ -61,12 +57,32 @@ class ParliamentarySpendingController < ApplicationController
 						url: row[column_titles.index("urlDocumento")]
 					)
 
-					invoice.save!
+					invoice.save
 				end
 			rows += 1
 		end
-
 		redirect_to deputies_index_path
+	end
+
+	private
+	def clean_string st
+		stop = false
+		while !stop && st.length > 0 do
+			if st[0].match?( /[[:alpha:]]/ )
+				stop = true
+			else
+				st = st[1..-1]
+			end
+		end
+		stop = false
+		while !stop && st.length > 0 do
+			if st[-1].match?( /[[:alnum:]]/ )
+				stop = true
+			else
+				st = st[0..-2]
+			end
+		end
+		return st
 	end
 
 end
