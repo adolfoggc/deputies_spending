@@ -19,13 +19,25 @@ class Deputy < ApplicationRecord
 	end
 
 	def total_in_invoices
-		total = {normal: 0, compensations: 0, mean_by_month: 0}
+		total = {
+			normal: 0, 
+			compensations: 0, 
+			mean_by_month: 0, 
+			without_url: 0, 
+			invoices_quantity: 0,
+			expenses_without_url: 0
+		}
 		self.invoices.each do |invoice|
 			if invoice.value > 0
 				total[:normal] += invoice.value
 			else
 				total[:compensations] += invoice.value
 			end
+			if invoice.url.blank?
+				total[:without_url] += 1
+				total[:expenses_without_url] += invoice.value
+			end
+			total[:invoices_quantity] += 1
 		end
 		total[:mean_by_month] = (total[:normal] + total[:compensations])/12
 		return total
