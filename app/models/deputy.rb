@@ -18,14 +18,16 @@ class Deputy < ApplicationRecord
 		self.invoices.maximum(:value)
 	end
 
-	def total_in_invoices
+	def invoices_info
 		total = {
 			normal: 0, 
 			compensations: 0, 
 			mean_by_month: 0, 
 			without_url: 0, 
 			invoices_quantity: 0,
-			expenses_without_url: 0
+			expenses_without_url: 0,
+			months: [0,0,0,0,0,0,0,0,0,0,0,0],
+			without_date: 0
 		}
 		self.invoices.each do |invoice|
 			if invoice.value > 0
@@ -36,6 +38,11 @@ class Deputy < ApplicationRecord
 			if invoice.url.blank?
 				total[:without_url] += 1
 				total[:expenses_without_url] += invoice.value
+			end
+			if invoice.issue_date.nil? || invoice.issue_date.blank? 
+				total[:without_date] += invoice.value
+			else
+				total[:months][ invoice.issue_date.month.to_i - 1 ] += invoice.value
 			end
 			total[:invoices_quantity] += 1
 		end
