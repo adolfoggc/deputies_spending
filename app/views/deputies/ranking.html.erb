@@ -1,8 +1,7 @@
-<h1>Deputies#index</h1>
-<p>Find me in app/views/deputies/index.html.erb</p>
-
+<h1>Ranking de Gastos</h1>
+<p>A informação é baseada exclusivamente na soma de seus gastos, contif
 <% if @deputies_array.any? %>
-	<table>
+	<table class="table table-dark table-striped table-hover">
 		<thead>
 			<th>
 				Nome
@@ -10,7 +9,7 @@
 			<th>
 				Gasto Total
 			</th>
-			<th>
+			<th class="text-center">
 				Posição
 			</th>
 		</thead>
@@ -23,7 +22,7 @@
 					<td>
 						<%= to_real deputy[:total_spent] %>
 					</td>
-					<td>
+					<td class="text-center">
 						<%= @position %>
             <% @position +=1 %>
 					</td>

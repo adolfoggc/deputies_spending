@@ -2,77 +2,84 @@
 <% if @deputy.nil? %>
   NENHUM POLÍTICO COM ESSA IDENTIFICAÇÃO
 <% else %>
-  <h2><%= @deputy.name %></h2>
-  <%= image_tag("https://www.camara.leg.br/internet/deputado/bandep/#{@deputy.deputy_id}.jpg", alt: "Sem Foto") %>
-  <br>
-	<%= @deputy.deputy_id %>
-  <br>
-	<%= @deputy.cpf_format %>
-  <br>
-	<%= @deputy.party %>
-  <br>
-	<%= @deputy.federal_unity.upcase %>
-	<br>
+  <h2><%= @deputy.name.upcase %></h2>
+  <div class="row">
+		<div class="col-2">
+			<%= image_tag("https://www.camara.leg.br/internet/deputado/bandep/#{@deputy.deputy_id}.jpg", alt: "Sem Foto", size: "114x152") %>
+		</div>
+		<div class="col">
+			<p><b>Identificação:</b> <%= @deputy.deputy_id %></p>
+			<p><b>CPF:</b> <%= @deputy.cpf_format %></p>
+			<p><b>Afiliação Partidária:</b> <%= @deputy.party %></p>
+			<p><b>Estado:</b> <%= @deputy.federal_unity.upcase %></p>
+		</div>
+	</div>
   <hr>
-  <h2>Despesas</h2>
-  <p>Não compensadas: <%= to_real @invoices[:normal] %></p>
-  <p>Compensações: <%= to_real @invoices[:compensations] %></p>
-  <p>Total: <%= to_real @invoices[:normal] + @invoices[:compensations] %></p>
-  <p>Valor da maior despesa: <%= to_real @deputy.most_expensive_invoice %></p>
-  <p>Média mensal (Inclui compensações): <%= to_real @invoices[:mean_by_month] %></p>
-	<p>Quantidade total de gastos: <%= @invoices[:invoices_quantity] %></p>
-	<p>Gastos sem nota fiscal: <%= @invoices[:without_url] %></p>
-	<p>Total gasto sem nota fiscal: <%= to_real @invoices[:expenses_without_url] %></p>
-  <table>
-		<thead>
-			<th>
-				Descrição
-			</th>
-			<th>
-				Descrição Completa
-			</th>
-			<th>
-				Fornecedor
-			</th>
-      <th>
-				Tipo do Documento
-			</th>
-      <th>
-				Data de Emissão
-			</th>
-      <th>
-				Valor Líquido
-			</th>
-			<th>
-				Link da Nota
-			</th>
-		</thead>
-		<tbody>
-			<% @deputy.invoices.order(:issue_date).each do |invoice| %>
-				<tr>
-					<td>
-						<%= invoice.description %>
-					</td>
-					<td>
-						<%= invoice.specific_description %>
-					</td>
-					<td>
-						<%= invoice.seller %>
-					</td>
-					<td>
-						<%= invoice.translate_kind %>
-					</td>
-					<td>
-						<%= invoice.issue_date.nil? ? invoice.issue_date : invoice.issue_date.strftime("%d/%m/%Y") %>
-					</td>
-          <td>
-						<%= to_real invoice.value %>
-					</td>
-					<td>
-						<%= invoice.url.blank? ? "Inexistente" : (link_to "Nota", invoice.url, target: "_blank") %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+  <h2>Informações sobre despesas</h2>
+	<div class="row">
+		<div class="col">
+			<p><b>Não compensadas: </b><%= to_real @invoices[:normal] %></p>
+			<p><b>Compensações: </b><%= to_real @invoices[:compensations] %></p>
+			<p><b>Total: </b><%= to_real @invoices[:normal] + @invoices[:compensations] %></p>
+			<p><b>Valor da maior despesa: </b><%= to_real @deputy.most_expensive_invoice %></p>
+		</div>
+		<div class="col">
+			<p><b>Média mensal (Inclui compensações): </b><%= to_real @invoices[:mean_by_month] %></p>
+			<p><b>Quantidade total de gastos: </b><%= @invoices[:invoices_quantity] %></p>
+			<p><b>Gastos com notas não apresentadas: </b><%= @invoices[:without_url] %></p>
+			<p><b>Total gasto com notas não apresentadas: </b><%= to_real @invoices[:expenses_without_url] %></p>
+		</div>
+	</div>  
+  <br>
+	<h2>Despesas</h2>
+	<% if @deputy.invoices.blank? %>
+		NENHUMA DESPESA CADASTRADA
+	<% else %>
+		<table class="table table-dark table-striped table-hover">
+			<thead>
+				<th>
+					Descrição
+				</th>
+				<th>
+					Fornecedor
+				</th>
+				<th>
+					Tipo do Documento
+				</th>
+				<th>
+					Data de Emissão
+				</th>
+				<th>
+					Valor Líquido
+				</th>
+				<th>
+					Link da Nota
+				</th>
+			</thead>
+			<tbody>
+				<% @deputy.invoices.order(:issue_date).each do |invoice| %>
+					<tr>
+						<td>
+							<%= invoice.description %>
+						</td>
+						<td>
+							<%= invoice.seller %>
+						</td>
+						<td>
+							<%= invoice.translate_kind %>
+						</td>
+						<td>
+							<%= invoice.issue_date.nil? ? invoice.issue_date : invoice.issue_date.strftime("%d/%m/%Y") %>
+						</td>
+						<td>
+							<%= to_real invoice.value %>
+						</td>
+						<td>
+							<%= invoice.url.blank? ? "Não Apresentada" : (link_to "Nota", invoice.url, target: "_blank") %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	<% end %>
 <% end %>
