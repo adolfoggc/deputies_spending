@@ -5,7 +5,7 @@ class Invoice < ApplicationRecord
 		fiscal_document: 0,
 		receipt: 1,
 		foreign_expenses: 2,
-		not_defined: 4
+		not_defined: 3
 	}
 
 	def translate_kind
