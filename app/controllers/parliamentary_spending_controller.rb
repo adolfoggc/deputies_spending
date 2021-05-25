@@ -3,17 +3,17 @@ class ParliamentarySpendingController < ApplicationController
 	end
 
 	def import
-		rowarray = Array.new
-		myfile = params[:cvs_file].tempfile.path
-		i = 0
-		rows = 0
-		column_titles = []
+		if params[:cvs_file].content_type.to_s == "text/csv"
+			myfile = params[:cvs_file].tempfile.path
+			i = 0
+			rows = 0
+			column_titles = []
 
-		cearenses = Hash.new
-		Invoice.delete_all
-		Deputy.delete_all
+			cearenses = Hash.new
+			Invoice.delete_all
+			Deputy.delete_all
 
-		File.open(myfile).each_line do |row|
+			File.open(myfile).each_line do |row|
 				i = 0
 				row = row.split(";")
 				while i < row.length do
@@ -27,7 +27,7 @@ class ParliamentarySpendingController < ApplicationController
 					end
 					i += 1
 				end
-				
+
 				if( row[column_titles.index("sgUF")]  == "CE")
 					unless cearenses.has_key?( row[column_titles.index("ideCadastro")] )
 						new_deputy = Deputy.new(
@@ -59,9 +59,14 @@ class ParliamentarySpendingController < ApplicationController
 
 					invoice.save
 				end
-			rows += 1
+				rows += 1
+			end
+			redirect_to deputies_index_path
+		else
+			redirect_to root_path, notice: 'Arquivo inválido'
 		end
-		redirect_to deputies_index_path
+
+		
 	end
 
 	private
